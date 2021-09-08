@@ -6,6 +6,6 @@ const router = Router();
 
 const testApis = new TestController();
 
-router.use('/', testApis.router);
+router.use('/test', testApis.router);
 
 export default router;

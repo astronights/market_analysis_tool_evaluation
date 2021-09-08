@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 
 export class TestController {
 
-    path = '/test';
+    path = '/welcome';
     router = Router();
 
     constructor() {
