@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean": "rimraf build",
+    "build": "npm run clean && tsc",
+    "start": "npm run build && node build/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
