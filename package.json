@@ -1,0 +1,19 @@
+{
+  "name": "market_analysis_technical_evaluation",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astronights/market_analysis_tool_evaluation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/astronights/market_analysis_tool_evaluation/issues"
+  },
+  "homepage": "https://github.com/astronights/market_analysis_tool_evaluation#readme"
+}
