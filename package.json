@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/astronights/market_analysis_tool_evaluation#readme",
   "dependencies": {
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/typescript": "^2.0.0",
     "dotenv": "^10.0.0",
