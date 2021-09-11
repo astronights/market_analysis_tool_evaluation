@@ -8,4 +8,6 @@ build/
 
 #secret
 .env
-mate-db-firebase.*
+
+#firebase
+mate-db-firebase-adminsdk-vekns-52206f7281.json
