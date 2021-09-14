@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { OHLCVService } from "../service/ohlcvService";
-import { Ohlcv } from "../model/ohlcv";
+import { ohlcv } from "../model/ohlcv";
+import * as utils from "../service/util";
 
 export class OHLCVController {
   router = Router();
@@ -19,7 +20,11 @@ export class OHLCVController {
   public updatePairs = async (
     req: Request,
     res: Response
-  ): Promise<Ohlcv[]> => {
-    return await Promise.all(this.ohlcv.saveOhlcv(req.body.pairs));
+  ): Promise<ohlcv[]> => {
+    let before = req.body.before || utils.getTimeStamp(new Date());
+    let after = req.body.after || utils.getTimeStampLastWeek(new Date());
+    return await Promise.all(
+      this.ohlcv.saveOhlcv(req.body.pairs, before, after)
+    );
   };
 }

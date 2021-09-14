@@ -8,5 +8,6 @@ const PORT = process.env.PORT || "3000";
 const MARKET = process.env.MARKET;
 const CURRENCY = process.env.CURRENCY;
 const PERIOD = parseInt(process.env.PERIOD || "3600");
+const MONGO_URI = process.env.MONGO_URI;
 
-export { HOST, PORT, MARKET, CURRENCY, PERIOD };
+export { HOST, PORT, MARKET, CURRENCY, PERIOD, MONGO_URI };

@@ -1,8 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-import { Response } from "express";
-import { db } from "../../db/db";
-import { Ohlcv, buildOhlcv, getId } from "../model/ohlcv";
+import Ohlcv, { ohlcv } from "../model/ohlcv";
 
 import * as CONFIG from "../../config";
 
@@ -24,38 +22,59 @@ export class OHLCVService {
     "san",
     "avt",
     "qtum",
-    "bt1",
   ];
 
-  public saveOhlcv = (pairs: string[] = this.coins): Promise<Ohlcv>[] => {
+  public saveOhlcv = (
+    pairs: string[] = this.coins,
+    before: number,
+    after: number
+  ): Promise<ohlcv>[] => {
     return pairs.map((coin) => {
-      return this.processOneCoin(coin);
+      return this.processOneCoin(coin, before, after);
     });
   };
 
-  private processOneCoin = async (coin: string): Promise<Ohlcv> => {
-    const url = `https://api.cryptowat.ch/markets/${CONFIG.MARKET}/${coin}${CONFIG.CURRENCY}/ohlc?periods=${CONFIG.PERIOD}`;
-    console.log(url);
+  private processOneCoin = async (
+    coin: string,
+    before: number,
+    after: number
+  ): Promise<ohlcv> => {
+    const url = `https://api.cryptowat.ch/markets/${CONFIG.MARKET}/${coin}${CONFIG.CURRENCY}/ohlc?before=${before}&after=${after}&periods=${CONFIG.PERIOD}`;
     const response: AxiosResponse = await axios.get(url);
-    // let dbSaves: FirebaseFirestore.WriteResult[] = [];
-    let candleSticks = <Ohlcv[]>response.data.result[
+    let candleSticks: ohlcv[] = await response.data.result[
       CONFIG.PERIOD.toString()
-    ].map(async (ohlcvRaw: number[]) => {
-      let candleStick = buildOhlcv(coin, ohlcvRaw, CONFIG.PERIOD);
+    ].map(async (ohlcvRaw: number[]): Promise<ohlcv> => {
+      let candleStick = this.buildOhlcv(coin, ohlcvRaw, CONFIG.PERIOD);
+      await candleStick.save();
       console.log(candleStick);
-      db.collection("ohlcv").doc(getId(candleStick)).set(candleStick);
+      return candleStick;
     });
-    let sortedItems = candleSticks.sort((a: Ohlcv, b: Ohlcv) =>
+    let sortedItems = candleSticks.sort((a: ohlcv, b: ohlcv) =>
       a.openTime < b.openTime ? -1 : 1
     );
     let candle = sortedItems[0];
-    console.log(candleSticks);
     candle.closeTime = sortedItems[sortedItems.length - 1].closeTime;
-    // try {
-    //   Promise.all(dbSaves);
-    // } catch (e) {
-    //   console.log(e);
-    // }
     return candle;
+  };
+
+  private buildOhlcv = (coin: string, list: number[], period: number) => {
+    return new Ohlcv({
+      _id: this.getId(
+        new Array(coin, (list[0] - period).toString(), list[0].toString())
+      ),
+      coin: coin,
+      closeTime: list[0],
+      open: list[1],
+      high: list[2],
+      low: list[3],
+      close: list[4],
+      volume: list[5],
+      quoteVolume: list[6],
+      openTime: list[0] - period,
+    });
+  };
+
+  private getId = (strings: string[]): string => {
+    return strings.join("-");
   };
 }
