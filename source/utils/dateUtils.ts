@@ -1,5 +1,3 @@
-import Ohlcv from "../model/ohlcv";
-
 export const getTimeStamp = (date: Date): number => {
   return Math.floor(roundDate(date).getTime() / 1000);
 };

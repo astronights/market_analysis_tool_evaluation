@@ -1,6 +1,7 @@
 import express from "express";
 import { createServer } from "http";
 import * as CONFIG from "./config";
+import { updatePairsTask } from "./task/updatePairsTask";
 
 import router from "./api/router";
 
@@ -14,4 +15,5 @@ const PORT = parseInt(CONFIG.PORT || "3000");
 
 const httpServer = createServer(app).listen(PORT, HOST, () => {
   console.log(`Started server at ${HOST}:${PORT}`);
+  updatePairsTask.start();
 });

@@ -5,27 +5,8 @@ import Ohlcv, { ohlcv } from "../model/ohlcv";
 import * as CONFIG from "../../config";
 
 export class OHLCVService {
-  coins = [
-    "btc",
-    "eth",
-    "ltc",
-    "bfx",
-    "bcc",
-    "bcu",
-    "eos",
-    "iota",
-    "dash",
-    "xrp",
-    "xmr",
-    "omg",
-    "neo",
-    "san",
-    "avt",
-    "qtum",
-  ];
-
   public saveOhlcv = (
-    pairs: string[] = this.coins,
+    pairs: string[],
     before: number,
     after: number
   ): Promise<ohlcv>[] => {

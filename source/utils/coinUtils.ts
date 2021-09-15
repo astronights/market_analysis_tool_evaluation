@@ -1,0 +1,18 @@
+export const coins = [
+  "btc",
+  "eth",
+  "ltc",
+  "bfx",
+  "bcc",
+  "bcu",
+  "eos",
+  "iota",
+  "dash",
+  "xrp",
+  "xmr",
+  "omg",
+  "neo",
+  "san",
+  "avt",
+  "qtum",
+];
