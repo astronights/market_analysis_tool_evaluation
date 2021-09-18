@@ -10,4 +10,4 @@ build/
 .env
 
 #firebase
-mate-db-firebase-adminsdk-vekns-52206f7281.json
+mate-db-firebase.json
