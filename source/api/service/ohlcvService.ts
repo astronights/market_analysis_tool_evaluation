@@ -1,11 +1,17 @@
 import axios, { AxiosResponse } from "axios";
-
 import Ohlcv, { ohlcv } from "../model/ohlcv";
-
 import * as CONFIG from "../../config";
 
 export class OHLCVService {
-  public saveOhlcv = (
+  public getAll = async (): Promise<ohlcv[]> => {
+    return await Ohlcv.find({});
+  };
+
+  public getOnePair = async (coin: string): Promise<ohlcv[]> => {
+    return await Ohlcv.find({ coin: coin });
+  };
+
+  public saveOhlcvPairs = (
     pairs: string[],
     before: number,
     after: number
