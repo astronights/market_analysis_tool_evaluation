@@ -28,13 +28,21 @@ export class OHLCVService {
   ): Promise<ohlcv> => {
     const url = `https://api.cryptowat.ch/markets/${CONFIG.MARKET}/${coin}${CONFIG.CURRENCY}/ohlc?before=${before}&after=${after}&periods=${CONFIG.PERIOD}`;
     const response: AxiosResponse = await axios.get(url);
+    if (response.data.result == null) {
+      return Promise.resolve(new Ohlcv());
+    }
     let candleSticks: ohlcv[] = await response.data.result[
       CONFIG.PERIOD.toString()
     ].map(async (ohlcvRaw: number[]): Promise<ohlcv> => {
       let candleStick = this.buildOhlcv(coin, ohlcvRaw, CONFIG.PERIOD);
-      await candleStick.save();
-      console.log(candleStick);
-      return candleStick;
+      let ohlcvDoc = <ohlcv>await Ohlcv.findOneAndUpdate(
+        { _id: candleStick.id },
+        candleStick,
+        {
+          upsert: true,
+        }
+      );
+      return ohlcvDoc;
     });
     let sortedItems = candleSticks.sort((a: ohlcv, b: ohlcv) =>
       a.openTime < b.openTime ? -1 : 1
