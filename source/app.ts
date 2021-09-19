@@ -13,7 +13,7 @@ app.use("/", router);
 const HOST = CONFIG.HOST;
 const PORT = parseInt(CONFIG.PORT);
 
-const httpServer = createServer(app).listen(PORT, HOST, () => {
+const httpServer = createServer(app).listen(PORT, () => {
   console.log(`Started server at ${HOST}:${PORT}`);
   updatePairsTask.start();
 });
