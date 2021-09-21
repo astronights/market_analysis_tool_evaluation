@@ -2,6 +2,11 @@ import axios, { AxiosResponse } from "axios";
 import Ohlcv, { ohlcv } from "../model/ohlcv";
 import * as CONFIG from "../../config";
 
+export type coin = {
+  symbol: string;
+  name: string;
+};
+
 export class OHLCVService {
   public getAll = async (): Promise<ohlcv[]> => {
     return await Ohlcv.find({});
@@ -11,8 +16,13 @@ export class OHLCVService {
     return await Ohlcv.find({ coin: coin });
   };
 
-  public getCoins = async (): Promise<string[]> => {
-    return await Ohlcv.distinct("coin");
+  public getCoins = async (): Promise<coin[]> => {
+    const url = "https://api.cryptowat.ch/assets";
+    const response: AxiosResponse = await axios.get(url);
+    let coins: string[] = await Ohlcv.distinct("coin");
+    return (<coin[]>response.data.result).filter((c) =>
+      coins.includes(c.symbol)
+    );
   };
 
   public saveOhlcvPairs = (
