@@ -11,6 +11,10 @@ export class OHLCVService {
     return await Ohlcv.find({ coin: coin });
   };
 
+  public getCoins = async (): Promise<string[]> => {
+    return await Ohlcv.distinct("coin");
+  };
+
   public saveOhlcvPairs = (
     pairs: string[],
     before: number,

@@ -9,9 +9,10 @@ export class OHLCVController {
 
   constructor() {
     this.ohlcv = new OHLCVService();
-    this.router.get("/get-all", this.getAllPairs);
-    this.router.get("/get-coin/:coin", this.getOnePair);
-    this.router.post("/save-pairs", this.updatePairs);
+    this.router.get("/all", this.getAllPairs);
+    this.router.get("/coin/:coin", this.getOnePair);
+    this.router.get("/coins", this.getCoins);
+    this.router.post("/save", this.updatePairs);
   }
 
   public getAllPairs = async (req: Request, res: Response) => {
@@ -20,6 +21,10 @@ export class OHLCVController {
 
   public getOnePair = async (req: Request, res: Response) => {
     return res.status(200).json(await this.ohlcv.getOnePair(req.params.coin));
+  };
+
+  public getCoins = async (req: Request, res: Response) => {
+    return res.status(200).json(await this.ohlcv.getCoins());
   };
 
   public updatePairs = async (req: Request, res: Response) => {
