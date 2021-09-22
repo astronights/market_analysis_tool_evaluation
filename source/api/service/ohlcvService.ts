@@ -16,13 +16,26 @@ export class OHLCVService {
     return await Ohlcv.find({ coin: coin });
   };
 
-  public getCoins = async (): Promise<coin[]> => {
+  public getLatestCoins = async (): Promise<ohlcv[]> => {
     const url = "https://api.cryptowat.ch/assets";
     const response: AxiosResponse = await axios.get(url);
-    let coins: string[] = await Ohlcv.distinct("coin");
-    return (<coin[]>response.data.result).filter((c) =>
-      coins.includes(c.symbol)
-    );
+    const latestCoins: ohlcv[] = (
+      await Ohlcv.aggregate([
+        { $sort: { closeTime: -1 } },
+        { $group: { _id: "$coin", latest: { $first: "$$ROOT" } } },
+      ])
+    ).map((element) => element.latest);
+    const coins: string[] = latestCoins.map((data) => data.coin);
+    const metaData = (<coin[]>response.data.result)
+      .filter((c) => coins.includes(c.symbol))
+      .reduce((map, coinMeta) => {
+        map[coinMeta.symbol] = coinMeta.name;
+        return map;
+      }, {});
+    return latestCoins.map((coinData) => {
+      coinData["name"] = metaData[coinData.coin];
+      return coinData;
+    });
   };
 
   public saveOhlcvPairs = (

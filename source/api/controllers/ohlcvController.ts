@@ -11,7 +11,7 @@ export class OHLCVController {
     this.ohlcv = new OHLCVService();
     this.router.get("/all", this.getAllPairs);
     this.router.get("/coin/:coin", this.getOnePair);
-    this.router.get("/coins", this.getCoins);
+    this.router.get("/latest-coins", this.getLatestCoins);
     this.router.post("/save", this.updatePairs);
   }
 
@@ -23,8 +23,8 @@ export class OHLCVController {
     return res.status(200).json(await this.ohlcv.getOnePair(req.params.coin));
   };
 
-  public getCoins = async (req: Request, res: Response) => {
-    return res.status(200).json(await this.ohlcv.getCoins());
+  public getLatestCoins = async (req: Request, res: Response) => {
+    return res.status(200).json(await this.ohlcv.getLatestCoins());
   };
 
   public updatePairs = async (req: Request, res: Response) => {

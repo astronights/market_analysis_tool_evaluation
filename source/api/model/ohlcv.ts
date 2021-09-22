@@ -27,6 +27,7 @@ export interface ohlcv extends mongoose.Document {
   close: number;
   volume: number;
   quoteVolume: number;
+  name?: string;
 }
 
 export default mongoose.model<ohlcv>("ohlcv", ohlcvSchema);
