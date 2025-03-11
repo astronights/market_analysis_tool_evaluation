@@ -15,19 +15,19 @@ export class OHLCVController {
     this.router.post("/save", this.updatePairs);
   }
 
-  public getAllPairs = async (req: Request, res: Response) => {
+  public getAllPairs = async (req: Request, res: Response): Promise<any> => {
     return res.status(200).json(await this.ohlcv.getAll());
   };
 
-  public getOnePair = async (req: Request, res: Response) => {
+  public getOnePair = async (req: Request, res: Response): Promise<any> => {
     return res.status(200).json(await this.ohlcv.getOnePair(req.params.coin));
   };
 
-  public getLatestCoins = async (req: Request, res: Response) => {
+  public getLatestCoins = async (req: Request, res: Response): Promise<any> => {
     return res.status(200).json(await this.ohlcv.getLatestCoins());
   };
 
-  public updatePairs = async (req: Request, res: Response) => {
+  public updatePairs = async (req: Request, res: Response): Promise<any> => {
     let cryptoCoins = req.body.pairs || coins;
     let before = req.body.before || utils.getTimeStamp(new Date());
     let after = req.body.after || utils.getTimeStampYesterday(new Date());

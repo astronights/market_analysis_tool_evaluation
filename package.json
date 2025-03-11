@@ -1,13 +1,12 @@
 {
   "name": "market_analysis_technical_evaluation",
-  "version": "0.0.0",
-  "description": "",
+  "version": "1.0.0",
+  "description": "Cryptocurrency Market Prices Server",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf build",
     "build": "npm run clean && tsc",
-    "start": "npm run build && node build/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run build && node build/app.js"
   },
   "repository": {
     "type": "git",
@@ -20,18 +19,18 @@
   },
   "homepage": "https://github.com/astronights/market_analysis_tool_evaluation#readme",
   "dependencies": {
-    "@types/express": "^4.17.13",
-    "@types/typescript": "^2.0.0",
-    "axios": "^0.21.4",
+    "@types/express": "^5.0.0",
+    "axios": "^1.8.2",
     "cors": "^2.8.5",
-    "cron": "^1.8.2",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "mongoose": "^6.0.5",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.4.2"
+    "cron": "^4.1.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1",
+    "typescript": "^5.8.2"
   },
   "devDependencies": {
-    "@types/cron": "^1.7.3"
+    "@types/cors": "^2.8.17",
+    "@types/cron": "^1.7.3",
+    "rimraf": "^6.0.1"
   }
 }

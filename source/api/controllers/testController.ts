@@ -10,11 +10,11 @@ export class TestController {
         this.router.post(this.path, this.submitName);
     }
 
-    public async getMessage(req: Request, res: Response): Promise<Response> {
+    public async getMessage(req: Request, res: Response): Promise<any> {
         return res.status(200).json({"message": "Hello and welcome to the app"});
     }
 
-    public async submitName(req: Request, res: Response): Promise<Response> {
+    public async submitName(req: Request, res: Response): Promise<any> {
         return res.status(200).json({"message": `Hello ${req.query.name}`})
     }
 }
