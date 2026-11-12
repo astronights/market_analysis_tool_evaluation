@@ -25,7 +25,7 @@
     "cron": "^4.1.0",
     "dotenv": "^16.4.7",
     "express": "^5.2.1",
-    "mongoose": "^8.24.1",
+    "mongoose": "^8.24.7",
     "typescript": "^5.8.2"
   },
   "devDependencies": {
